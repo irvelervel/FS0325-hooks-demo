@@ -27,7 +27,8 @@ import { useEffect, useState } from 'react'
 // o che cambiano le sue props).
 
 const EffectExample = () => {
-  const [counter, setCounter] = useState(0)
+  const [counter1, setCounter1] = useState(0)
+  const [counter2, setCounter2] = useState(0)
 
   useEffect(() => {
     // this.getReservations()
@@ -38,23 +39,63 @@ const EffectExample = () => {
   // pericoloso, perchè prono a CICLI INFINITI (basta che dentro ci sia un
   // set-qualcosa e siamo fritti! perchè ri-entreremmo automaticamente nell'effect)
 
+  useEffect(() => {
+    // this.getReservations()
+    // this.getComments()
+    console.log('USEEFFECT che si aziona solo con counter1')
+  }, [counter1])
+  // questo è un po' come un "componentDidUpdate" con dentro una condizione
+  // per filtrare solamente gli update relativi a "counter1"
+  // più elementi mettete nell'array, più condizioni ("dipendenze") date
+  // all'effect per ri-eseguirsi
+
+  useEffect(() => {
+    // this.getReservations()
+    // this.getComments()
+    console.log("USEEFFECT che si aziona solo all'avvio")
+  }, [])
+  // questo è come un COMPONENTDIDMOUNT!
+  // se io allo useEffect do un array di dipendenze VUOTO, gli sto dando
+  // esattamente ZERO motivazioni per ri-eseguirsi successivamente dopo l'avvio
+
   return (
     <div>
       <h3>Esempio useEffect()</h3>
+      <h5>COUNTER1</h5>
       <div className="d-flex justify-content-center align-items-center">
         <button
           className="btn btn-primary px-4"
           onClick={() => {
-            setCounter(counter - 1)
+            setCounter1(counter1 - 1)
           }}
         >
           -
         </button>
-        <p className="m-0 px-4 fw-bold">{counter}</p>
+        <p className="m-0 px-4 fw-bold">{counter1}</p>
         <button
           className="btn btn-primary px-4"
           onClick={() => {
-            setCounter(counter + 1)
+            setCounter1(counter1 + 1)
+          }}
+        >
+          +
+        </button>
+      </div>
+      <h5>COUNTER2</h5>
+      <div className="d-flex justify-content-center align-items-center">
+        <button
+          className="btn btn-warning px-4"
+          onClick={() => {
+            setCounter2(counter2 - 1)
+          }}
+        >
+          -
+        </button>
+        <p className="m-0 px-4 fw-bold">{counter2}</p>
+        <button
+          className="btn btn-warning px-4"
+          onClick={() => {
+            setCounter2(counter2 + 1)
           }}
         >
           +
